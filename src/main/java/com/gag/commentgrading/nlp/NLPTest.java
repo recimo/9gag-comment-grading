@@ -20,34 +20,34 @@ public class NLPTest {
             "He sent a postcard to his sister Jane Smith. " +
             "After hearing about Joe's trip, Jane decided she might go to France one day.";*/
 
-    public static void main(String[] args) {
-        String text = "Today was a great day. I was really happy and feeling good.";
-
-        SentimentAnalyzer sentimentAnalyzer = new SentimentAnalyzer();
-
-        sentimentAnalyzer.init();
-
-        SentimentResult sentimentResult = sentimentAnalyzer.getSentimentResult(text);
-
-
-
-        System.out.println("Sentiments Classification:");
-
-        System.out.println("Very positive: " + sentimentResult.getSentimentClass().getVeryPositive()+"%");
-
-        System.out.println("Positive: " + sentimentResult.getSentimentClass().getPositive()+"%");
-
-        System.out.println("Neutral: " + sentimentResult.getSentimentClass().getNeutral()+"%");
-
-        System.out.println("Negative: " + sentimentResult.getSentimentClass().getNegative()+"%");
-
-        System.out.println("Very negative: " + sentimentResult.getSentimentClass().getVeryNegative()+"%");
-
-        System.out.println("\nSentiments result:");
-
-        System.out.println("Sentiment Score: " + sentimentResult.getSentimentScore());
-
-        System.out.println("Sentiment Type: " + sentimentResult.getSentimentType());
-
-    }
+//    public static void main(String[] args) {
+//        String text = "Today was a great day. I was really happy and feeling good.";
+//
+//        SentimentAnalyzer sentimentAnalyzer = new SentimentAnalyzer();
+//
+//        sentimentAnalyzer.init();
+//
+//        SentimentResult sentimentResult = sentimentAnalyzer.getSentimentResult(text);
+//
+//
+//
+//        System.out.println("Sentiments Classification:");
+//
+//        System.out.println("Very positive: " + sentimentResult.getSentimentClass().getVeryPositive()+"%");
+//
+//        System.out.println("Positive: " + sentimentResult.getSentimentClass().getPositive()+"%");
+//
+//        System.out.println("Neutral: " + sentimentResult.getSentimentClass().getNeutral()+"%");
+//
+//        System.out.println("Negative: " + sentimentResult.getSentimentClass().getNegative()+"%");
+//
+//        System.out.println("Very negative: " + sentimentResult.getSentimentClass().getVeryNegative()+"%");
+//
+//        System.out.println("\nSentiments result:");
+//
+//        System.out.println("Sentiment Score: " + sentimentResult.getSentimentScore());
+//
+//        System.out.println("Sentiment Type: " + sentimentResult.getSentimentType());
+//
+//    }
 }

@@ -20,4 +20,8 @@ public class PostGradeService {
     public List<PostGrade> findAll() {
         return postGradeRepository.findAll();
     }
+
+    public PostGrade findByPostId(String postId) {
+        return postGradeRepository.findByPostId(postId);
+    }
 }

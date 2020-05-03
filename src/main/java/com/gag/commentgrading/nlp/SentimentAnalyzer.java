@@ -19,6 +19,7 @@ public class SentimentAnalyzer {
     public void init() {
         Properties properties = new Properties();
         properties.setProperty("annotators", "tokenize, ssplit, parse, sentiment");
+        properties.setProperty("tokenize.options", "untokenizable=noneDelete");
         pipeline = new StanfordCoreNLP(properties);
     }
 

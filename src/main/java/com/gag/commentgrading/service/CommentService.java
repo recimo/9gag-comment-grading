@@ -20,4 +20,5 @@ public class CommentService {
 	public List<Comment> findAll() {
 		return repository.findAll();
 	}
+
 }
