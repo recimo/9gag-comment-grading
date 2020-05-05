@@ -1,4 +1,5 @@
 package com.gag.commentgrading.nlp;
+
 import edu.stanford.nlp.coref.data.CorefChain;
 import edu.stanford.nlp.ling.*;
 import edu.stanford.nlp.ie.util.*;
@@ -13,15 +14,18 @@ import java.util.*;
 
 public class NLPTest {
 
-    /*public static String text = "Joe Smith was born in California. " +
-            "In 2017, he went to Paris, France in the summer. " +
-            "His flight left at 3:00pm on July 10th, 2017. " +
-            "After eating some escargot for the first time, Joe said, \"That was delicious!\" " +
-            "He sent a postcard to his sister Jane Smith. " +
-            "After hearing about Joe's trip, Jane decided she might go to France one day.";*/
-
-//    public static void main(String[] args) {
-//        String text = "Today was a great day. I was really happy and feeling good.";
+	/*
+	 * public static String text = "Joe Smith was born in California. " +
+	 * "In 2017, he went to Paris, France in the summer. " +
+	 * "His flight left at 3:00pm on July 10th, 2017. " +
+	 * "After eating some escargot for the first time, Joe said, \"That was delicious!\" "
+	 * + "He sent a postcard to his sister Jane Smith. " +
+	 * "After hearing about Joe's trip, Jane decided she might go to France one day."
+	 * ;
+	 */
+//
+//	public static void main(String[] args) {
+//		String text = "  I somehow   thought the   dad died   from a car crash and this was what it was left";
 //
 //        SentimentAnalyzer sentimentAnalyzer = new SentimentAnalyzer();
 //
@@ -29,7 +33,8 @@ public class NLPTest {
 //
 //        SentimentResult sentimentResult = sentimentAnalyzer.getSentimentResult(text);
 //
-//
+//		text = text.replaceAll("@[^ ]+", "");
+////		System.out.println(text);
 //
 //        System.out.println("Sentiments Classification:");
 //
@@ -49,5 +54,5 @@ public class NLPTest {
 //
 //        System.out.println("Sentiment Type: " + sentimentResult.getSentimentType());
 //
-//    }
+//	}
 }

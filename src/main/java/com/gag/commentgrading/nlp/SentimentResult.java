@@ -27,4 +27,10 @@ public class SentimentResult {
     public void setSentimentClass(NLPModel sentimentClass) {
         this.sentimentClass = sentimentClass;
     }
+
+	@Override
+	public String toString() {
+		return "SentimentResult [sentimentType=" + sentimentType + ", sentimentScore=" + sentimentScore
+				+ ", sentimentClass=" + sentimentClass + "]";
+	}
 }

@@ -18,60 +18,68 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping(value = "/api/rest/grade")
 public class CommentGradesController {
 
-    @Autowired
-    CommentService commentService;
-    @Autowired
-    PostGradeService postGradeService;
+	@Autowired
+	CommentService commentService;
+	@Autowired
+	PostGradeService postGradeService;
 
-    @RequestMapping(value = "/save", method = RequestMethod.GET, produces = "application/json")
-    private ResponseEntity<?> saveGrades() {
-        for(Comment comment : commentService.findAll()) {
-            if((CommentGradingApplication.gradedCommentsMap.containsValue(comment.getCommentId())))
-            {
-                continue;
-            }
-           PostGrade postGrade = postGradeService.findByPostId(comment.getPermalink().split("/")[comment.getPermalink().split("/").length - 1].split("#")[0]);
-           if(postGrade == null) {
-               postGrade = new PostGrade();
-               postGrade.setPostId(comment.getPermalink().split("/")[comment.getPermalink().split("/").length - 1].split("#")[0]);
-           }
-            try {
-                SentimentAnalyzer sentimentAnalyzer = new SentimentAnalyzer();
-                sentimentAnalyzer.init();
-                SentimentResult sentimentResult = sentimentAnalyzer.getSentimentResult(comment.getText());
+	@RequestMapping(value = "/save", method = RequestMethod.GET, produces = "application/json")
+	private ResponseEntity<?> saveGrades() {
+		SentimentAnalyzer sentimentAnalyzer = new SentimentAnalyzer();
+		sentimentAnalyzer.init();
 
-                CommentGrades commentGrades = new CommentGrades();
-                commentGrades.setCommentId(comment.getCommentId());
-                commentGrades.setVeryPositive(sentimentResult.getSentimentClass().getVeryPositive());
-                commentGrades.setPositive(sentimentResult.getSentimentClass().getPositive());
-                commentGrades.setNeutral(sentimentResult.getSentimentClass().getNeutral());
-                commentGrades.setNegative(sentimentResult.getSentimentClass().getNegative());
-                commentGrades.setVeryNegative(sentimentResult.getSentimentClass().getVeryNegative());
-                commentGrades.setSentimentType(fromInteger(sentimentResult.getSentimentScore()));
+		for (Comment comment : commentService.findAll()) {
+			if ((CommentGradingApplication.gradedCommentsMap.containsValue(comment.getCommentId()))) {
+				continue;
+			}
+			PostGrade postGrade = postGradeService.findByPostId(
+					comment.getPermalink().split("/")[comment.getPermalink().split("/").length - 1].split("#")[0]);
+			if (postGrade == null) {
+				postGrade = new PostGrade();
+				postGrade.setPostId(
+						comment.getPermalink().split("/")[comment.getPermalink().split("/").length - 1].split("#")[0]);
+			}
+			try {
+				if (comment.getRichtext() != null)
+					if (!comment.getRichtext().isEmpty()) {
+						String text = comment.getRichtext();
+						text = text.replaceAll("@[^ ]+", "");
 
-                postGrade.getGrades().add(commentGrades);
+						SentimentResult sentimentResult = sentimentAnalyzer.getSentimentResult(text);
 
-                postGradeService.save(postGrade);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+						CommentGrades commentGrades = new CommentGrades();
+						commentGrades.setCommentId(comment.getCommentId());
+						commentGrades.setVeryPositive(sentimentResult.getSentimentClass().getVeryPositive());
+						commentGrades.setPositive(sentimentResult.getSentimentClass().getPositive());
+						commentGrades.setNeutral(sentimentResult.getSentimentClass().getNeutral());
+						commentGrades.setNegative(sentimentResult.getSentimentClass().getNegative());
+						commentGrades.setVeryNegative(sentimentResult.getSentimentClass().getVeryNegative());
+						commentGrades.setSentimentType(fromInteger(sentimentResult.getSentimentScore()));
 
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+						postGrade.getGrades().add(commentGrades);
 
-    public static SentimentType fromInteger(int x) {
-        switch(x) {
-            case 0:
-                return SentimentType.veryPositive;
-            case 1:
-                return SentimentType.positive;
-            case 2:
-                return SentimentType.neutral;
-            case 3:
-                return SentimentType.negative;
-            default:
-                return SentimentType.veryNegative;
-        }
-    }
+						postGradeService.save(postGrade);
+					}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	public static SentimentType fromInteger(int x) {
+		switch (x) {
+		case 0:
+			return SentimentType.veryPositive;
+		case 1:
+			return SentimentType.positive;
+		case 2:
+			return SentimentType.neutral;
+		case 3:
+			return SentimentType.negative;
+		default:
+			return SentimentType.veryNegative;
+		}
+	}
 }
