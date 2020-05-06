@@ -15,12 +15,13 @@ public class CommentGrades {
     private Integer neutral;
     private Integer negative;
     private Integer veryNegative;
-    private SentimentType sentimentType;
+    //private SentimentType sentimentType;
+    private Integer sentimentType;
 
     public CommentGrades() {
     }
 
-    public CommentGrades(Long id, String commentId, Integer veryPositive, Integer positive, Integer neutral, Integer negative, Integer veryNegative, SentimentType sentimentType) {
+    public CommentGrades(Long id, String commentId, Integer veryPositive, Integer positive, Integer neutral, Integer negative, Integer veryNegative, Integer sentimentType) {
         this.id = id;
         this.commentId = commentId;
         this.veryPositive = veryPositive;
@@ -87,11 +88,11 @@ public class CommentGrades {
         this.veryNegative = veryNegative;
     }
 
-    public SentimentType getSentimentType() {
+    public Integer getSentimentType() {
         return sentimentType;
     }
 
-    public void setSentimentType(SentimentType sentimentType) {
+    public void setSentimentType(Integer sentimentType) {
         this.sentimentType = sentimentType;
     }
 }

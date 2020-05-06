@@ -25,8 +25,6 @@ public class CommentGradesController {
 
 	@RequestMapping(value = "/save", method = RequestMethod.GET, produces = "application/json")
 	private ResponseEntity<?> saveGrades() {
-		SentimentAnalyzer sentimentAnalyzer = new SentimentAnalyzer();
-		sentimentAnalyzer.init();
 
 		for (Comment comment : commentService.findAll()) {
 			if ((CommentGradingApplication.gradedCommentsMap.containsValue(comment.getCommentId()))) {
@@ -40,6 +38,9 @@ public class CommentGradesController {
 						comment.getPermalink().split("/")[comment.getPermalink().split("/").length - 1].split("#")[0]);
 			}
 			try {
+				SentimentAnalyzer sentimentAnalyzer = new SentimentAnalyzer();
+				sentimentAnalyzer.init();
+
 				if (comment.getRichtext() != null)
 					if (!comment.getRichtext().isEmpty()) {
 						String text = comment.getRichtext();
@@ -54,7 +55,7 @@ public class CommentGradesController {
 						commentGrades.setNeutral(sentimentResult.getSentimentClass().getNeutral());
 						commentGrades.setNegative(sentimentResult.getSentimentClass().getNegative());
 						commentGrades.setVeryNegative(sentimentResult.getSentimentClass().getVeryNegative());
-						commentGrades.setSentimentType(fromInteger(sentimentResult.getSentimentScore()));
+						commentGrades.setSentimentType(sentimentResult.getSentimentScore() - 2);
 
 						postGrade.getGrades().add(commentGrades);
 
@@ -68,18 +69,18 @@ public class CommentGradesController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	public static SentimentType fromInteger(int x) {
-		switch (x) {
-		case 0:
-			return SentimentType.veryPositive;
-		case 1:
-			return SentimentType.positive;
-		case 2:
-			return SentimentType.neutral;
-		case 3:
-			return SentimentType.negative;
-		default:
-			return SentimentType.veryNegative;
-		}
-	}
+//	public static SentimentType fromInteger(int x) {
+//		switch (x) {
+//		case 0:
+//			return SentimentType.veryPositive;
+//		case 1:
+//			return SentimentType.positive;
+//		case 2:
+//			return SentimentType.neutral;
+//		case 3:
+//			return SentimentType.negative;
+//		default:
+//			return SentimentType.veryNegative;
+//		}
+//	}
 }
